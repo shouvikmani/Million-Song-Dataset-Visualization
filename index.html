@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Music Over the Decades</title>
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap core JavaScript-->
+    <script src="js/jquery-3.2.0.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <!-- JQuery UI -->
+    <link href="js/jquery-ui/jquery-ui.css" rel="stylesheet">
+    <script src="js/jquery-ui/jquery-ui.min.js"></script>
+    <!-- d3 -->
+    <script src="js/d3.v3.min.js" charset="utf-8"></script>
+    <script src="js/queue.v1.min.js"></script>
+    <!-- Custom styles -->
+    <link href="index.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <h3>Question 2: How have genres become more or less similar over time?</h3>
+    <br>
+    <div id="chord-vis">
+        <div class="chord-diagram-main"></div>
+        <br>
+        <div id="slider">
+            <div id="slider-handle" class="ui-slider-handle"></div>
+        </div>
+    </div>
+</body>
+</html>
+
+<script>
+$( function() {
+    var handle = $("#slider-handle");
+    $( "#slider" ).slider({
+      value:1950,
+      min: 1950,
+      max: 2000,
+      step: 10,
+      create: function() {
+        handle.text( $( this ).slider( "value" ) + "s" );
+        // Set initial year to 1950s
+        changeDataYear("1950s")
+      },
+      slide: function( event, ui ) {
+        year = ui.value + "s"
+        handle.text(year);
+        // Change year based on slider value
+        changeDataYear(year)
+      }
+    });
+} );
+</script>
+<script src="chord.js"></script>
