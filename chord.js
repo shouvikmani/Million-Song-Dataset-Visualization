@@ -27,6 +27,9 @@ var svg = d3.selectAll(".chord-diagram-main").append("svg")
 svg.append("circle")
     .attr("r", outerRadius);
 
+var genresGlobal = null;
+var selectedGenreIndex = null;
+
 function changeDataYear(year) {
     // Remove existing groups and chords
     svg.selectAll(".group").remove();
@@ -42,6 +45,7 @@ function changeDataYear(year) {
 
 function makeChordDiagram(error, genres, matrix) {
   if (error) throw error;
+  genresGlobal = genres;
 
   // Compute the chord layout.
   layout.matrix(matrix);
@@ -53,10 +57,23 @@ function makeChordDiagram(error, genres, matrix) {
       .attr("class", "group")
       .on("mouseover", mouseover);
 
+  var totalSongs = 0
+  for (var i = 0; i < matrix.length; i++) {
+      totalSongs = totalSongs + matrix[i][i]
+  }
+
   // Add a mouseover title.
   group.append("title").text(function(d, i) {
-    return genres[i].name + ": " + matrix[i][i] + " songs";
+    return genres[i].name + ": " + formatPercent(matrix[i][i]/totalSongs) + " of all songs";
   });
+
+  // // Add a tooltip
+  // group.append("a")
+  //       .attr("data-toggle", "tooltip")
+  //       .attr("data-placement", "top")
+  //       .attr("title", function(d, i) {
+  //           return genres[i].name + ": " + formatPercent(matrix[i][i]/totalSongs) + " of all songs";
+  //       });
 
   // Add the group arc.
   var groupPath = group.append("path")
@@ -85,20 +102,44 @@ function makeChordDiagram(error, genres, matrix) {
       .style("fill", function(d) { return genres[d.source.index].color; })
       .attr("d", path);
 
-  // Add an elaborate mouseover title for each chord.
-  chord.append("title").text(function(d) {
-    return genres[d.source.index].name
-        + " → " + genres[d.target.index].name
-        + ": " + formatPercent(d.source.value)
-        + "\n" + genres[d.target.index].name
-        + " → " + genres[d.source.index].name
-        + ": " + formatPercent(d.target.value);
-  });
+  // If genre was selected in chord diagram of previous decade,
+  // then select that genre in the new chord diagram
+  if (selectedGenreIndex != null) {
+      setChordColors(selectedGenreIndex, chord);
+      showSelectedGenreChords(selectedGenreIndex, chord);
+  }
 
   function mouseover(d, i) {
-    chord.classed("fade", function(p) {
-      return p.source.index != i
-          && p.target.index != i;
-    });
+    selectedGenreIndex = i;
+    setChordColors(i, chord);
+    showSelectedGenreChords(i, chord);
   }
 }
+
+function setChordColors(genreIndex, chord) {
+    // Set chords to target colors
+    chord.style("fill", function(p) {
+        if (p.source.index == genreIndex || p.target.index == genreIndex) {
+            if (genreIndex > p.source.index) {
+                return genresGlobal[p.source.index].color
+            } else {
+                return genresGlobal[p.target.index].color;
+            }
+        }
+    });
+}
+
+function showSelectedGenreChords(genreIndex, chord) {
+    chord.classed("fade", function(p) {
+      return p.source.index != genreIndex
+          && p.target.index != genreIndex;
+    });
+}
+
+function setSelectedGenreIndexToNull() {
+    selectedGenreIndex = null;
+}
+
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+});

@@ -27,6 +27,8 @@
     <div id="chord-vis">
         <div class="chord-diagram-main"></div>
         <br>
+        <button type="button" class="btn btn-default" onclick="restoreAllChordConnections()">Reset Connections</button>
+        <br><br>
         <div id="slider">
             <div id="slider-handle" class="ui-slider-handle"></div>
         </div>
@@ -35,6 +37,8 @@
 </html>
 
 <script>
+var year = "1950s"  // Initial decade
+
 $( function() {
     var handle = $("#slider-handle");
     $( "#slider" ).slider({
@@ -45,7 +49,7 @@ $( function() {
       create: function() {
         handle.text( $( this ).slider( "value" ) + "s" );
         // Set initial year to 1950s
-        changeDataYear("1950s")
+        changeDataYear(year)
       },
       slide: function( event, ui ) {
         year = ui.value + "s"
@@ -55,5 +59,11 @@ $( function() {
       }
     });
 } );
+
+// Calls functions in chord.js code
+function restoreAllChordConnections() {
+    setSelectedGenreIndexToNull();
+    changeDataYear(year)    // Basically refreshing diagram
+}
 </script>
 <script src="chord.js"></script>
