@@ -97,3 +97,18 @@ path.chord {
 #data-quality-image-2 {
     width: 60%;
 }
+
+#initial-1, #time-1, #final-2 {
+    float: left;
+    width: 45%;
+    margin-right: 3%;
+}
+
+#initial-2, #time-2, #final-1, #final-3 {
+    width: 45%;
+}
+
+#clear {
+    padding-top: 50px;
+    clear: both;
+}

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Music Genres Over the Decades</title>
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap core JavaScript-->
+    <script src="js/jquery-3.2.0.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <!-- JQuery UI -->
+    <link href="js/jquery-ui/jquery-ui.css" rel="stylesheet">
+    <script src="js/jquery-ui/jquery-ui.min.js"></script>
+    <!-- Custom styles for this template -->
+    <link href="css/jumbotron-narrow.css" rel="stylesheet">
+    <!-- Custom styles -->
+    <link href="index.css" rel="stylesheet">
+</head>
+
+<body>
+<div class="container">
+  <div class="header clearfix">
+    <nav>
+      <ul class="nav nav-pills pull-right">
+        <li role="presentation"><a href="index.html">Home</a></li>
+        <li role="presentation"><a href="dataquality.html">Quality</a></li>
+        <li role="presentation" class="active"><a href="approach.html">Approach</a></li>
+      </ul>
+    </nav>
+    <h3 class="text-muted">Understanding Origins and Fusion of Music Genres</h3>
+  </div>
+
+    <body>
+
+    <br>
+    <h3> Approach </h3>
+    <br>
+
+    <h4> Inital Sketches </h4>
+    <img id="initial-1" src="static/approach/initial_1.jpg">
+    <img id="initial-2" src="static/approach/initial_2.jpg">
+    <br><br>
+
+    <p>
+    In the initial scope of design, we were going to look at the similarity between genres based on acoustics. In this sketch, each chord linking genres represents similarity of an acoustic feature. But this design posed the challenge of representing similarities based on each acoustic in a single diagram.
+    </p>
+
+    <p>
+    We also thought of using polygonal plots to visualize similarity between genres.
+    </p>
+
+    <p>
+    A major challenge with this design was the sparsity of data for acoustic features. Most of these attributes were 0 in the million song dataset, except loudness and tempo. We did find other acoustics, like variations of timbre, that could explain similarity but they were not intuitive enough to represent in a plot like this.
+    </p>
+    <br>
+
+    <h4> Variation over time</h4>
+    <img id="time-1" src="static/approach/time_1.jpg" alt="HTML5 Icon">
+    <img id="time-2" src="static/approach/time_2.jpg" alt="HTML5 Icon">
+    <br><br>
+
+    <p>
+    In the initial design, we thought of representing the acoustics over time with a line plot and a dropdown selection for genre. In the second iteration, we thought of clustering the genres based on two acoustics: energy and danceability. And then we would show the plots changing over time. Our hypothesis was this would show the emergence of a new genre. Again, sparsity of acoustic attributes was a major challenge for both these designs.
+    </p>
+    <br>
+
+    <h4 id="clear"> Final designs </h4>
+
+    <img id="final-1" src="static/approach/final_1.jpg">
+    <br><br>
+
+    <p>
+    We did, however develop a new design that shows variation over time. This plot is one of our final sketches that we ended up implemented. It is a chord diagram which shows compatibility between genres based on the number of shared songs. Shared songs are the songs tagged with both genres that the chord links. Width of the chord indicates the number of shared songs, and length of the arc indicates proportion of songs for that genre.
+    </p>
+    <br>
+
+    <img id="final-2" src="static/approach/final_2.jpg">
+    <img id="final-3" src="static/approach/final_3.jpg">
+    <br><br>
+
+    <p>
+     We decided to build this chord diagram for each decade and use a slider to switch between decades. This enables the users to compare different decades and answer questions like – how compatibility has changed over decades, what are the new genres that have emerged, which genre is most popular in each decade, etc. We also visualized proportion of songs by genre over time through a line plot to better understand emergence of fusion genres.
+    </p>
+    <br>
+
+    <h4> Heatmaps </h4>
+
+    <p>
+    To explain the similarity based on acoustics, we are using heatmaps. The similarity measures are normalized for each genre and shaded from red (high similarity) to yellow (low similarity). These heat matrices helped us explain the compatible pairs we see in chord diagram.
+    </p>
+
+
+  </body>
+</html>
