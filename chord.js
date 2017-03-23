@@ -1,5 +1,5 @@
-var width = 720,
-    height = 720,
+var width = 670,
+    height = 670,
     outerRadius = Math.min(width, height) / 2 - 10,
     innerRadius = outerRadius - 24;
 
@@ -139,7 +139,3 @@ function showSelectedGenreChords(genreIndex, chord) {
 function setSelectedGenreIndexToNull() {
     selectedGenreIndex = null;
 }
-
-$(function () {
-  $('[data-toggle="tooltip"]').tooltip()
-});

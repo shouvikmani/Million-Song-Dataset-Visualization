@@ -1,13 +1,24 @@
 body {
-    font-family: helvetica;
-    width: 90%;
     display: block;
     margin-left: auto;
     margin-right: auto;
 }
 
-#chord-vis {
+.container {
+    max-width: 1000px;
+}
+
+#data-table-container {
+    height: 381px;
+    overflow-y: scroll;
+}
+
+#line-graph {
     text-align: center;
+}
+
+#line-graph-image {
+    width: 70%;
 }
 
 #circle circle {
@@ -28,11 +39,28 @@ path.chord {
   display: none;
 }
 
-#slider {
-    width: 500px;
+#chord-vis {
+    width: 1000px;
+}
+
+.chord-diagram-main {
+    float: left;
+    margin-right: 20px;
+    margin-bottom: 20px;
+}
+
+#chord-diagram-controls {
+    width: 750px;
     display: block;
     margin-left: auto;
     margin-right: auto;
+    clear: both;
+}
+
+#slider {
+    width: 500px;
+    float: left;
+    margin-right: 50px;
 }
 
 #slider-handle {
@@ -44,4 +72,20 @@ path.chord {
     margin-left: -40px;
     text-align: center;
     line-height: 1.6em;
+}
+
+#resetButton {
+    margin-top: -15px;
+}
+
+.chord-narratives {
+    padding-top: 30px;
+}
+
+.chord-narratives ul li {
+    font-size: 16px;
+}
+
+.heatmap {
+    width: 49%;
 }
