@@ -38,6 +38,8 @@
 
     <br>
 
+    <div class="lead" id="team">Team: Anurag Gandhi, Jamie Diner, Rachel Wong, Shouvik Mani, Taranveer Singh</div>
+
     <h4>Introduction</h4>
     <p>In this guided narrative, we tell a story about the evolution of music genres over the decades. We use a series of interactive visualizations to illustrate how various genres emerged and coexisted over time. Specifically, we ask the following questions:</p>
     <ol>
@@ -76,7 +78,7 @@
     <h4>Visualization 2: Compatibility of Genres</h4>
     <i>Question: How has the compatibility of different fusion genres changed over time? (based on number of shared songs)</i>
     <br><br>
-    <p>Using this interactive chord diagram, we can examine the similarities between the fusion genres over the decades. The thickness of each chord (connection) is proportional to the number of shared songs between two genres, conveying the similarity of those genres.</p>
+    <p>Using this interactive chord diagram, we can examine the similarities between the fusion genres over the decades. The thickness of each chord (connection between two genres) is proportional to the number of shared songs between the genres, conveying the similarity of those genres.</p>
     <br>
     <div id="chord-vis">
         <div class="chord-diagram-main"></div>
@@ -146,17 +148,40 @@
     <h4>Visualization 3: Compatibility of Genres</h4>
     <i>Question: How has the compatibility of different fusion genres changed over time? (based on correlation of acoustics)</i>
     <br><br>
-    <p>Similarly, we can use heatmaps to gauge the similarity between genres. However, instead of using the number of shared songs as a proxy for similarity, we will now use correlation between four acoustic features (average timbre (1-12), tempo, loudness, duration) to measure similarity between genres over the six decades.</p>
-    <div id="heatmap-container">
-        <img class="heatmap" src="static/heatmap_1950.png">
-        <img class="heatmap" src="static/heatmap_1960.png">
-        <img class="heatmap" src="static/heatmap_1970.png">
-        <img class="heatmap" src="static/heatmap_1980.png">
-        <img class="heatmap" src="static/heatmap_1990.png">
-        <img class="heatmap" src="static/heatmap_2000.png">
+    <p>Similarly, we can use heatmaps to gauge the similarity between genres. However, instead of using the number of shared songs as a proxy for similarity, we will now use correlation between four acoustic features (average timbre, tempo, loudness, duration) to measure similarity between genres over the six decades. Red squares indicate high correlation in acoustics, conveying similarity between the genres.</p>
+    <br>
+
+    <div id="heatmap-vis">
+        <img id="heatmap" src="static/heatmap_1950s.png">
+        <br>
+        <div id="heatmap-controls">
+            <div id="slider-2">
+                <div id="slider-handle-2" class="ui-slider-handle"></div>
+            </div>
+        </div>
     </div>
 
-    <br><hr>
+    <br><br><hr>
+
+    <h4>Analysis</h4>
+    <i>Question: Can we infer why two genres are compatible?</i>
+    <br><br>
+    <p>When we compare the heatmap and chord diagram for a single decade, we can gain some valuable insights. For example, consider the two visualizations for the 1980s.</p>
+
+    <img class="analysis-images" src="static/chord_1980s.png">
+    <img class="analysis-images" src="static/heatmap_1980s.png">
+
+    <p>From the chord diagram, we see that rock is most compatible with pop, dance, metal, and indie (wide chords between genres). Similarly, the heatmap tells us that rock is most compatible with indie, pop, metal, and alternative (dark red values). These findings from the heatmap correlates with those from the chord diagram. This supports the hypothesis that these genres are not only most compatible in terms of the number of shared songs, but also in their acoustics.</p>
+
+    <p>There are however, some contradictory findings as well. From the heatmap, we can see that rock is least similar in terms of acoustics to reggae, folk, jazz, rap, and blues. However, the chord diagram does not indicate low compatibility with some of these genres. For example, folk has high proportion of shared songs with rock. These contradictions might arise due to several reasons:</p>
+
+    <ul>
+        <li>We may be missing features in our analysis to gauge similarity between genres. For instance, we don't have song lyrics.</li>
+        <li>Different tags for genres – e.g. folk is also sometimes called world music. We might have missed several such data points because we used regex to group genres.</li>
+        <li>Mislabeling of genres by users</li>
+    </ul>
+
+    <hr>
 
     <h4>Conclusion</h4>
     <p>Some of our key takeaways from this analysis are:</p>
@@ -173,10 +198,13 @@
 
 <script>
 var year = "1950s"  // Initial decade
+var year_heatmap = "1950s"
 
 $( function() {
+
+    // Chord diagram slider
     var handle = $("#slider-handle");
-    $( "#slider" ).slider({
+    $("#slider").slider({
       value:1950,
       min: 1950,
       max: 2000,
@@ -195,6 +223,23 @@ $( function() {
         updateChordNarrative(year)
       }
     });
+
+    // Heatmap slider
+    var handle_heatmap = $("#slider-handle-2");
+    $("#slider-2").slider({
+        value:1950,
+        min: 1950,
+        max: 2000,
+        step: 10,
+        create: function() {
+          handle_heatmap.text( $( this ).slider( "value" ) + "s" );
+        },
+        slide: function( event, ui ) {
+          year_heatmap = ui.value + "s";
+          handle_heatmap.text(year_heatmap);
+          updateHeatmapYear(year_heatmap);
+        }
+    });
 } );
 
 // Calls functions in chord.js code
@@ -204,11 +249,14 @@ function restoreAllChordConnections() {
 }
 
 function updateChordNarrative(year) {
-    console.log(year)
     chordID = "narrative-" + year;
     $(".chord-narratives").hide();
     $("#" + chordID).show();
 }
 
+function updateHeatmapYear(year) {
+    heatmapFilePath = "static/heatmap_" + year + ".png";
+    $("#heatmap").attr("src", heatmapFilePath);
+}
 </script>
 <script src="chord.js"></script>

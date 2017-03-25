@@ -57,13 +57,13 @@ path.chord {
     clear: both;
 }
 
-#slider {
+#slider, #slider-2 {
     width: 500px;
     float: left;
     margin-right: 50px;
 }
 
-#slider-handle {
+#slider-handle, #slider-handle-2 {
     font-size: 16px;
     width: 80px;
     height: 28px;
@@ -86,8 +86,15 @@ path.chord {
     font-size: 16px;
 }
 
-.heatmap {
-    width: 49%;
+#heatmap {
+    width: 90%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#heatmap-controls {
+    margin-left: 25%;
 }
 
 #data-quality-image-1 {
@@ -111,4 +118,8 @@ path.chord {
 #clear {
     padding-top: 50px;
     clear: both;
+}
+
+.analysis-images {
+    width: 49%;
 }
