@@ -41,6 +41,7 @@ path.chord {
 
 #chord-vis {
     width: 1000px;
+    position: relative;
 }
 
 .chord-diagram-main {
@@ -84,6 +85,12 @@ path.chord {
 
 .chord-narratives ul li {
     font-size: 16px;
+}
+
+#chord-vis-hint {
+    position: absolute;
+    left: 70%;
+    bottom: 100px;
 }
 
 #heatmap {
